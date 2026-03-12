@@ -12,7 +12,7 @@ interface Blog {
 }
 async function getData(): Promise<Blog[]> {
   await dbConnect();
-  const blogPosts = await BlogPost.find({});
+  const blogPosts = await BlogPost.find({}).lean();
   // console.log(blogPosts);
   return blogPosts;
 }
@@ -32,12 +32,14 @@ async function getData(): Promise<Blog[]> {
 
 // createBlog();
 //
+//
 export default async function Home() {
   const data = await getData();
   return (
     <div className="py-6">
       <h1 className="text-3xl font-bold tracking-wide mb-8">Latest Posts</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {/*work on designing blogs page like image content etc*/}
         {data.map((item) => {
           return <h1 key={item._id}>{item.title}</h1>;
         })}

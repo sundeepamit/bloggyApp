@@ -1,4 +1,4 @@
-// create a mongodb connection
+// create a mongodb connection for database blogApp
 import mongoose from "mongoose";
 const MONGODB_URI = "mongodb://localhost:27017/blogApp";
 export default dbConnect;
