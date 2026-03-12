@@ -1,5 +1,6 @@
 "use client";
 import { signUp } from "@/lib/auth-client";
+
 export default function SignUpRoute() {
   async function handleSignUp(formData: FormData) {
     const name = formData.get("name") as string;
