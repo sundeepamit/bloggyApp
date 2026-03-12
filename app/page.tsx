@@ -10,6 +10,7 @@ interface Blog {
   authorName: string;
   createdAt: Date;
 }
+
 async function getData(): Promise<Blog[]> {
   await dbConnect();
   const blogPosts = await BlogPost.find({}).lean();
@@ -17,22 +18,6 @@ async function getData(): Promise<Blog[]> {
   return blogPosts;
 }
 
-// async function createBlog() {
-//   await dbConnect();
-//   const blog = await BlogPost.create({
-//     title: "A random Blog",
-//     content: "this is random blog create for testing purpose.",
-//     imageUrl: "https://picsum.photos/200",
-//     authorUrl: "https://xsgames.co/randomusers/avatar.php?g=female",
-//     authorName: "Corliss Buchite",
-//     createdAt: Date.now(),
-//   });
-//   console.log(blog);
-// }
-
-// createBlog();
-//
-//
 export default async function Home() {
   const data = await getData();
   return (
