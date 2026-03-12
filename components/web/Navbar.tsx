@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export function Navbar() {
     return (
@@ -14,7 +15,12 @@ export function Navbar() {
                 </div>
             </div>
             <div className="flex gap-4 items-center">
-
+                <Button variant={"default"} size={"lg"} className="inline-32 hover:shadow-xl transition-all">
+                    <Link href={"/login"}>Login</Link>
+                </Button>
+                <Button variant={"secondary"} size={"lg"} className="inline-32 hover:shadow-xl transition-all">
+                    <Link href={"/signup"}>Sign Up</Link>
+                </Button>
             </div>
         </nav>
     )
