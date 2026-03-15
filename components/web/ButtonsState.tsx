@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useSession, signOut } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import { ToggleTheme } from "@/components/web/ToggleTheme";
 
 export default function ButtonState() {
     const { data: session, isPending } = useSession()
@@ -46,7 +47,7 @@ export default function ButtonState() {
             >
                 <Link href={"/signup"}>Sign Up</Link>
             </Button>}
-
+            <ToggleTheme />
         </div>
     );
 }

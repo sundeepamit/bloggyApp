@@ -26,6 +26,7 @@ export async function Navbar() {
         </div>
       </div>
       <ButtonState />
+
     </nav>
   );
 }
