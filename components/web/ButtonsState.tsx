@@ -1,12 +1,24 @@
 "use client"
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { useSession } from "@/lib/auth-client";
-
+import { useSession, signOut } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 export default function ButtonState() {
     const { data: session, isPending } = useSession()
+    const router = useRouter()
     if (isPending) return null;
+
+    const handleLogOut = async () => {
+        await signOut({
+            fetchOptions: {
+                onSuccess: () => {
+                    router.push('/')
+                    router.refresh();
+                }
+            }
+        })
+    }
     return (
         <div className="flex gap-4 items-center">
             {!session && <Button
@@ -20,8 +32,9 @@ export default function ButtonState() {
                 variant={"default"}
                 size={"lg"}
                 className="inline-32 hover:shadow-xl transition-all"
+                onClick={handleLogOut}
             >
-                <Link href={"/"}>LogOut</Link>
+                LogOut
             </Button>}
 
 
