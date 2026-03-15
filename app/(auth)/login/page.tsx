@@ -1,3 +1,4 @@
+"use client"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -11,8 +12,22 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Link from "next/link"
+import { signIn } from "@/lib/auth-client"
 
 export default function LoginRoute() {
+
+  const handleLogin = async (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const formData = new FormData(e.currentTarget)
+    const email = formData.get('email') as string
+    const password = formData.get('password') as string
+    await signIn.email({
+      email: email,
+      password: password,
+      callbackURL: '/dashboard'
+    })
+  }
+
   return (
     <Card className="w-full max-w-sm m-auto mt-4">
       <CardHeader>
@@ -25,7 +40,7 @@ export default function LoginRoute() {
         </CardAction>
       </CardHeader>
       <CardContent>
-        <form>
+        <form onSubmit={handleLogin} method="post">
           <div className="flex flex-col gap-6">
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
@@ -33,6 +48,7 @@ export default function LoginRoute() {
                 id="email"
                 type="email"
                 placeholder="Joe@example.com"
+                name="email"
                 required
               />
             </div>
@@ -40,7 +56,7 @@ export default function LoginRoute() {
               <div className="flex items-center">
                 <Label htmlFor="password">Password</Label>
               </div>
-              <Input id="password" type="password" placeholder="********" required />
+              <Input id="password" type="password" placeholder="********" name="password" required />
             </div>
           </div>
           <CardFooter className="flex-col gap-2 mt-4">
