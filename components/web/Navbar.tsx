@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import ButtonState from "@/components/web/ButtonsState";
 
 export async function Navbar() {
   const session = await auth.api.getSession({
@@ -51,24 +52,33 @@ export async function Navbar() {
           </Link>
         </div>
       </div>
-      <div className="flex gap-4 items-center">
-        <Button
-          variant={"default"}
-          size={"lg"}
-          className="inline-32 hover:shadow-xl transition-all"
-        >
-          <Link href={"/login"}>Login</Link>
-        </Button>
-        {!session && (
-          <Button
-            variant={"secondary"}
-            size={"lg"}
-            className="inline-32 hover:shadow-xl transition-all"
-          >
-            <Link href={"/signup"}>Sign Up</Link>
-          </Button>
-        )}
-      </div>
+      <ButtonState />
     </nav>
   );
 }
+
+
+
+// <div className="flex gap-4 items-center">
+//       <Button
+//         variant={"default"}
+//         size={"lg"}
+//         className="inline-32 hover:shadow-xl transition-all"
+//       >
+//         <Link href={"/login"}>Login</Link>
+//       </Button>
+//       {/* session is not null means user signup or login  */}
+//       {session ? <Button
+//         variant={"secondary"}
+//         size={"lg"}
+//         className="inline-32 hover:shadow-xl transition-all"
+//       >
+//         <Link href={"/"}>Log out</Link>
+//       </Button> : <Button
+//         variant={"secondary"}
+//         size={"lg"}
+//         className="inline-32 hover:shadow-xl transition-all"
+//       >
+//         <Link href={"/signup"}>Sign Up</Link>
+//       </Button>}
+//     </div>
