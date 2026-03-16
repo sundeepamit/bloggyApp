@@ -25,16 +25,8 @@ export default function CreatePostForm() {
         const title = formData.get('title') as string
         const content = formData.get('content') as string
         const imageUrl = formData.get('imageUrl') as string
-        const result = await createPost(title, content, imageUrl)
-        if (result.success) {
-            alert('Post created')
-            router.push('/dashboard')
-
-        } else {
-            alert(result.error)
-
-        }
-
+        await createPost(title, content, imageUrl)
+        router.push('/dashboard')
     }
 
     return (
