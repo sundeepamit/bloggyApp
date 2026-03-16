@@ -12,10 +12,12 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-// import { client } from "@/lib/db"
-// import { BlogPost } from "@/models/blogPost"
+import { createPost } from "@/app/actions"
+import { useRouter } from "next/navigation"
 
 export default function CreatePostForm() {
+
+    const router = useRouter()
 
     const handlePostSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -23,9 +25,16 @@ export default function CreatePostForm() {
         const title = formData.get('title') as string
         const content = formData.get('content') as string
         const imageUrl = formData.get('imageUrl') as string
-        // await BlogPost.create({ title: title, content: content, imageUrl: imageUrl })
-        // Getting error 
-        // fix server action
+        const result = await createPost(title, content, imageUrl)
+        if (result.success) {
+            alert('Post created')
+            router.push('/dashboard')
+
+        } else {
+            alert(result.error)
+
+        }
+
     }
 
     return (
