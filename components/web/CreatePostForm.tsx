@@ -2,10 +2,8 @@
 import { Button } from "@/components/ui/button"
 import {
     Card,
-    CardAction,
     CardContent,
     CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
@@ -25,8 +23,15 @@ export default function CreatePostForm() {
         const title = formData.get('title') as string
         const content = formData.get('content') as string
         const imageUrl = formData.get('imageUrl') as string
-        await createPost(title, content, imageUrl)
-        router.push('/dashboard')
+        const result = await createPost(title, content, imageUrl)
+        if (result.success === true) {
+            alert("Successfully created post")
+            router.push('/dashboard')
+        } else {
+            alert('Fail to create post')
+            console.log(result.error)
+        }
+
     }
 
     return (
