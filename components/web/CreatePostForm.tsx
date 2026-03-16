@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { createPost } from "@/app/actions"
 import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 export default function CreatePostForm() {
 
@@ -25,10 +26,10 @@ export default function CreatePostForm() {
         const imageUrl = formData.get('imageUrl') as string
         const result = await createPost(title, content, imageUrl)
         if (result.success === true) {
-            alert("Successfully created post")
+            toast.success("Successfully created post")
             router.push('/dashboard')
         } else {
-            alert('Fail to create post')
+            toast.error("Fail to create post")
             console.log(result.error)
         }
 
