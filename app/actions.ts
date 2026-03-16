@@ -31,3 +31,25 @@ export async function createPost(title: string, content: string, imageUrl: strin
         return { success: false, error: 'Failed to create blog post' }
     }
 }
+
+
+export async function getUserPost(authorId: string) {
+    const data = await auth.api.getSession({
+        headers: await headers()
+    })
+
+    if (!data) {
+        throw new Error('Unauthorized: You must be logged in')
+    }
+
+    const { session } = data
+
+    await dbConnect()
+
+    if (authorId !== session.userId) {
+        throw new Error('Unauthorized: You can only view your own posts')
+    }
+
+    const blogs = await BlogPost.find({ authorId: authorId }).lean()
+    return blogs
+}
