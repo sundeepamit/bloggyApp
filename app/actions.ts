@@ -53,3 +53,5 @@ export async function getUserPost(authorId: string) {
     const blogs = await BlogPost.find({ authorId: authorId }).lean()
     return blogs
 }
+
+

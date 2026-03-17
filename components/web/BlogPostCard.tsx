@@ -1,7 +1,7 @@
+
 import { getUserPost } from "@/app/actions";
 import {
     Card,
-    CardAction,
     CardContent,
     CardDescription,
     CardFooter,
@@ -11,6 +11,7 @@ import {
 import { auth } from "@/lib/auth";
 
 import { headers } from "next/headers";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function BlogPostCard() {
@@ -26,6 +27,8 @@ export default async function BlogPostCard() {
     // console.log(session)
     const userId = session.userId
     const userPosts = await getUserPost(userId)
+    // console.log(userPosts[0]._id.toString())
+
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
             {userPosts.map((post) => (
@@ -36,7 +39,8 @@ export default async function BlogPostCard() {
                     </CardHeader>
                     <CardContent>
                         {post.imageUrl && (
-                            <img src={post.imageUrl} alt={post.title} className="w-full h-56 object-cover rounded-md mb-2" />
+                            <Link href={`/dashboard/${post._id.toString()}`}><img src={post.imageUrl} alt={post.title} className="w-full h-56 object-cover rounded-md mb-2" /></Link>
+
 
                         )}
                         <p className="text-sm text-muted-foreground line-clamp-3">{post.content}</p>
