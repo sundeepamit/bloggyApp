@@ -13,8 +13,12 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Link from "next/link"
 import { signIn } from "@/lib/auth-client"
+import { toast } from "sonner"
+import { useState } from "react"
+import { Loader2 } from "lucide-react"
 
 export default function LoginRoute() {
+  const [isPending, setIsPending] = useState(false)
 
   const handleLogin = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -25,6 +29,18 @@ export default function LoginRoute() {
       email: email,
       password: password,
       callbackURL: '/dashboard'
+    }, {
+      onRequest: () => {
+        setIsPending(true)
+      },
+      onSuccess: () => {
+        toast.success('Login successfully')
+        setIsPending(false)
+      },
+      onError: (ctx) => {
+        toast.error(ctx.error.message)
+        setIsPending(false)
+      },
     })
   }
 
@@ -60,11 +76,11 @@ export default function LoginRoute() {
             </div>
           </div>
           <CardFooter className="flex-col gap-2 mt-4">
-            <Button type="submit" className="w-full">
-              Login
+            <Button type="submit" className="w-full" disabled={isPending}>
+              {isPending ? <Loader2 className="animate-spin" /> : "Login"}
             </Button>
             <p className="font-semibold m-2">or Create a new account</p>
-            <Button variant="outline" className="w-full">
+            <Button variant="outline" className="w-full" disabled={isPending}>
               <Link href={"/signup"}>SignUp</Link>
             </Button>
           </CardFooter>
