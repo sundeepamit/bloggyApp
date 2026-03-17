@@ -26,26 +26,27 @@ export default async function BlogPostCard() {
     // console.log(session)
     const userId = session.userId
     const userPosts = await getUserPost(userId)
-    return (<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
-        {userPosts.map((post) => (
-            <Card key={post._id.toString()} className="mb-5 shadow-2xl w-full max-w-sm ">
-                <CardHeader>
-                    <CardTitle>{post.title}</CardTitle>
-                    <CardDescription>CreatedAt: {post.createdAt.toLocaleDateString()}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                    {post.imageUrl && (
-                        <img src={post.imageUrl} alt={post.title} className="w-full h-56 object-cover rounded-md mb-2" />
+    return (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
+            {userPosts.map((post) => (
+                <Card key={post._id.toString()} className="mb-5 shadow-2xl w-full max-w-sm ">
+                    <CardHeader>
+                        <CardTitle>{post.title}</CardTitle>
+                        <CardDescription>CreatedAt: {post.createdAt.toLocaleDateString()}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        {post.imageUrl && (
+                            <img src={post.imageUrl} alt={post.title} className="w-full h-56 object-cover rounded-md mb-2" />
 
-                    )}
-                    <p className="text-sm text-muted-foreground line-clamp-3">{post.content}</p>
-                </CardContent>
-                <CardFooter>
-                    <span className="text-sm text-muted-foreground">By {post.authorName}</span>
-                </CardFooter>
-            </Card>
+                        )}
+                        <p className="text-sm text-muted-foreground line-clamp-3">{post.content}</p>
+                    </CardContent>
+                    <CardFooter>
+                        <span className="text-sm text-muted-foreground">By {post.authorName}</span>
+                    </CardFooter>
+                </Card>
 
-        ))}
-    </div>
+            ))}
+        </div>
     )
 }

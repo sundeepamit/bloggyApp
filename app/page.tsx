@@ -1,6 +1,14 @@
 import dbConnect from "@/lib/mongodb";
 import { BlogPost } from "@/models/blogPost";
-
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 interface Blog {
   _id: string;
   title: string;
@@ -23,11 +31,26 @@ export default async function Home() {
   return (
     <div className="py-6">
       <h1 className="text-3xl font-bold tracking-wide mb-8">Latest Posts</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {/*work on designing blogs page like image content etc*/}
-        {data.map((item) => {
-          return <h1 key={item._id}>{item.title}</h1>;
-        })}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
+        {data.map((post) => (
+          <Card key={post._id.toString()} className="flex flex-col h-full shadow-2xl">
+            <CardHeader>
+              <CardTitle>{post.title}</CardTitle>
+              <CardDescription>CreatedAt: {post.createdAt.toLocaleDateString()}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {post.imageUrl && (
+                <img src={post.imageUrl} alt={post.title} className="w-full h-56 object-cover rounded-md mb-2" />
+
+              )}
+              <p className="text-sm text-muted-foreground line-clamp-3">{post.content}</p>
+            </CardContent>
+            <CardFooter className="mt-auto">
+              <span className="text-sm text-muted-foreground">By {post.authorName}</span>
+            </CardFooter>
+          </Card>
+
+        ))}
       </div>
     </div>
   );
