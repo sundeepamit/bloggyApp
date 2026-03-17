@@ -55,3 +55,11 @@ export async function getUserPost(authorId: string) {
 }
 
 
+export async function getPostById(id: string) {
+    await dbConnect()
+    const blogs = await BlogPost.findById(id)
+    if (!blogs) {
+        throw new Error("Blog not exist")
+    }
+    return blogs
+}
