@@ -119,3 +119,24 @@ export async function deletePostById(authorId: string, postId: string) {
     }
 
 }
+
+
+// app/actions.ts
+export async function updatePost(postId: string, authorId: string, blogData: { title: string, content: string, imageUrl: string }) {
+    await dbConnect()
+    const data = await auth.api.getSession({
+        headers: await headers()
+    })
+
+    if (!data) {
+        throw new Error('Unauthorized: You must be logged in')
+    }
+
+    const { session } = data
+
+
+    if (authorId !== session.userId) {
+        throw new Error('Unauthorized: You can only update your own posts')
+    }
+    await BlogPost.findByIdAndUpdate(postId, blogData)
+}
