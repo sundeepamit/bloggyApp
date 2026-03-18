@@ -21,10 +21,12 @@ export default async function BlogPostById(props: BlogProp) {
                     <span className="mr-7"><Heart className="w-5 h-5 " /></span>
                 </div>
 
+                <div className="mb-3">
+                    <img src={post.imageUrl} alt="image of post" className="w-3xl rounded-2xl mt-8 shadow-xl" />
+                    <p className="mt-7 mb-6 text-xl text-gray-700 antialiased tracking-wide">{post.content}</p>
+                    <Button variant={"default"} className="text-2xl p-6" ><Link href={"/dashboard"}>Back</Link></Button>
+                </div>
 
-                <img src={post.imageUrl} alt="image of post" className="w-3xl rounded-2xl mt-8 shadow-xl" />
-                <p className="mt-7 mb-6 text-xl text-gray-700 antialiased tracking-wide">{post.content}</p>
-                <Button variant={"default"} className="text-2xl p-6" ><Link href={"/dashboard"}>Back</Link></Button>
 
             </main>
 
