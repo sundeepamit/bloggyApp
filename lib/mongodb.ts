@@ -1,6 +1,6 @@
 // create a mongodb connection for database blogApp
 import mongoose from "mongoose";
-const MONGODB_URI = "mongodb://localhost:27017/blogApp";
+const MONGODB_URI = process.env.MONGODB_URI;
 export default dbConnect;
 async function dbConnect() {
   if (!MONGODB_URI) {

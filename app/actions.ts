@@ -7,6 +7,8 @@ import { auth } from '@/lib/auth'
 import { headers } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 import dbConnect from '@/lib/mongodb'
+import { notFound } from 'next/navigation'
+import mongoose from 'mongoose'
 
 export async function createPost(title: string, content: string, imageUrl: string) {
     const { session, user } = (await auth.api.getSession({
@@ -54,12 +56,52 @@ export async function getUserPost(authorId: string) {
     return blogs
 }
 
+export async function getAllPost() {
+    await dbConnect()
+    const blogs = await BlogPost.find({}).lean()
+    return blogs.map((blog) => ({
+        ...blog,
+        _id: blog._id.toString(),
+        createdAt: blog.createdAt.toISOString()
+    }))
+}
 
 export async function getPostById(id: string) {
     await dbConnect()
-    const blogs = await BlogPost.findById(id)
-    if (!blogs) {
-        throw new Error("Blog not exist")
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        notFound()
     }
-    return blogs
+
+    const blog = await BlogPost.findById(id).lean()
+    if (!blog) {
+        // throw new Error("Blog not exist")
+        notFound()
+    }
+    return { ...blog, _id: blog._id.toString(), createdAt: blog.createdAt.toISOString() }
+}
+
+export async function deletePostById(authorId: string, postId: string) {
+    await dbConnect()
+
+    const data = await auth.api.getSession({
+        headers: await headers()
+    })
+
+    if (!data) {
+
+        throw new Error('Unauthorized: You must be logged in')
+    }
+
+    const { session } = data
+
+    if (authorId !== session.userId) {
+        throw new Error('Unauthorized: You cannot delete this post')
+    }
+
+    const deletedPost = await BlogPost.findByIdAndDelete(postId).lean()
+
+    if (!deletedPost) {
+        throw new Error('Post not found')
+    }
+
 }

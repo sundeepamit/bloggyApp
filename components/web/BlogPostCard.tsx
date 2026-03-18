@@ -35,7 +35,7 @@ export default async function BlogPostCard() {
                 <Card key={post._id.toString()} className="mb-5 shadow-2xl w-full max-w-sm ">
                     <CardHeader>
                         <CardTitle>{post.title}</CardTitle>
-                        <CardDescription>CreatedAt: {post.createdAt.toLocaleDateString()}</CardDescription>
+                        <CardDescription>CreatedAt: {new Date(post.createdAt).toLocaleDateString()}</CardDescription>
                     </CardHeader>
                     <CardContent>
                         {post.imageUrl && (
