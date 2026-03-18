@@ -9,6 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import Link from "next/link";
 interface Blog {
   _id: string;
   title: string;
@@ -35,7 +36,7 @@ export default async function Home() {
         {data.map((post) => (
           <Card key={post._id.toString()} className="flex flex-col h-full shadow-2xl">
             <CardHeader>
-              <CardTitle>{post.title}</CardTitle>
+              <CardTitle className="text-lg">{post.title}</CardTitle>
               <CardDescription>CreatedAt: {post.createdAt.toLocaleDateString()}</CardDescription>
             </CardHeader>
             <CardContent>
@@ -45,11 +46,13 @@ export default async function Home() {
               )}
               <p className="text-sm text-muted-foreground line-clamp-3">{post.content}</p>
             </CardContent>
-            <CardFooter className="mt-auto">
+            <CardFooter className="mt-auto flex justify-between">
               <span className="text-sm text-muted-foreground">By {post.authorName}</span>
-            </CardFooter>
-          </Card>
+              <Link href={`/dashboard/${post._id}`} className="text-blue-500 underline">Go to Detail</Link>
 
+            </CardFooter>
+
+          </Card>
         ))}
       </div>
     </div>
