@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import BlogLike from "@/components/web/BlogLike"
 import BlogPostDeleteButton from "@/components/web/BlogPostDeleteButton"
+import { getuserSession } from "@/app/actions"
+
 
 type BlogProp = {
     params: Promise<{ blogId: string }>
@@ -11,7 +13,8 @@ type BlogProp = {
 export default async function BlogPostById(props: BlogProp) {
     const { blogId } = await props.params
     const post = await getPostById(blogId)
-
+    const session = await getuserSession()
+    // console.log(session.userId == post.authorId)
     return (
         <div className="mt-3">
             <main>
@@ -27,7 +30,7 @@ export default async function BlogPostById(props: BlogProp) {
                     <p className="mt-7 mb-6 text-xl text-gray-700 antialiased tracking-wide">{post.content}</p>
                     <div className="flex items-center justify-between">
                         <Button variant={"default"} className="text-2xl p-6" ><Link href={"/dashboard"}>Back</Link></Button>
-                        <BlogPostDeleteButton authorId={post.authorId} postId={post._id} />
+                        {session.userId == post.authorId && <BlogPostDeleteButton authorId={post.authorId} postId={post._id} />}
                     </div>
 
                 </div>

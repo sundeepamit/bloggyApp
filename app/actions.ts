@@ -10,6 +10,20 @@ import dbConnect from '@/lib/mongodb'
 import { notFound } from 'next/navigation'
 import mongoose from 'mongoose'
 
+
+export async function getuserSession() {
+    const data = await auth.api.getSession({
+        headers: await headers()
+    })
+
+    if (!data) {
+        throw new Error('Unauthorized: You must be logged in')
+    }
+
+    const { session } = data
+    return session
+}
+
 export async function createPost(title: string, content: string, imageUrl: string) {
     const { session, user } = (await auth.api.getSession({
         headers: await headers()
