@@ -36,7 +36,7 @@ export default function CreatePostForm() {
     }
 
     return (
-        <Card className="w-full m-auto mt-11 shadow-2xl">
+        <Card className="w-full m-auto mt-11 shadow-2xl mb-11">
             <CardHeader>
                 <CardTitle className="text-3xl font-bold">Write Blog Post</CardTitle>
                 <CardDescription className="text-xl">
