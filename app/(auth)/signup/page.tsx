@@ -16,6 +16,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { toast } from "sonner";
 
 export default function SignUpRoute() {
   const [loading, setLoading] = useState(false);
@@ -41,8 +42,8 @@ export default function SignUpRoute() {
           router.push("/dashboard");
         },
         onError: (ctx) => {
-          // display the error message
-          alert(ctx.error.message);
+          toast.error(ctx.error.message)
+          setLoading(false)
         },
       },
     );
