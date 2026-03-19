@@ -3,7 +3,7 @@ import ButtonState from "@/components/web/ButtonsState";
 
 export async function Navbar() {
   return (
-    <nav className="py-5 flex items-center justify-between">
+    <nav className="px-7 py-5 flex items-center justify-between">
       <div className="flex items-center gap-6">
         <Link href={"/"}>
           <h1 className="text-3xl font-semibold">
