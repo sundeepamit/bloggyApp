@@ -1,11 +1,3 @@
-// // Named export
-// export function Footer() {
-//     return <div>
-//         <h1>Footer goes here</h1>
-//     </div>
-// }
-
-
 import Link from "next/link";
 
 export default function Footer() {
